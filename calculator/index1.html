@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Cursor Swarm</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #050505; /* Very dark background */
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let particles = [];
+    
+    // --- Configuration ---
+    const particleCount = 35;   // Number of dots following you
+    const connectionDist = 100; // Distance to draw lines between dots
+    const glowColor = 'cyan';   // Futuristic color
+    
+    // Mouse tracking
+    const mouse = {
+        x: undefined,
+        y: undefined
+    };
+
+    function init() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Start mouse in center so dots don't spawn at 0,0
+        mouse.x = width / 2;
+        mouse.y = height / 2;
+
+        createParticles();
+    }
+
+    // Track mouse
+    window.addEventListener('mousemove', (e) => {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    });
+
+    window.addEventListener('resize', init);
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 2 + 1; // Random size 1px to 3px
+            
+            // Speed factor: lower = lazier/slower, higher = faster
+            // This creates the "stretching" effect as they move
+            this.speed = Math.random() * 0.08 + 0.02; 
+            
+            // Random offset so they don't all stack on the exact pixel
+            this.offsetX = Math.random() * 100 - 50;
+            this.offsetY = Math.random() * 100 - 50;
+        }
+
+        update() {
+            // Target is the mouse position plus the particle's personal offset
+            const targetX = mouse.x + this.offsetX;
+            const targetY = mouse.y + this.offsetY;
+
+            // Move towards target (Linear Interpolation for smooth lag)
+            this.x += (targetX - this.x) * this.speed;
+            this.y += (targetY - this.y) * this.speed;
+            
+            // Slowly rotate the offset to make the swarm feel "alive"
+            // This makes them orbit slightly around the cursor
+            this.offsetX = Math.cos(Date.now() * 0.001 * this.speed * 10) * 50;
+            this.offsetY = Math.sin(Date.now() * 0.001 * this.speed * 10) * 50;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = glowColor;
+            
+            // Add Glow Effect
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = glowColor;
+            
+            ctx.fill();
+            // Reset shadow for performance
+            ctx.shadowBlur = 0;
+        }
+    }
+
+    function createParticles() {
+        particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    }
+
+    function connectParticles() {
+        // Loop through all particles to see if they are close enough to connect
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a; b < particles.length; b++) {
+                let dx = particles[a].x - particles[b].x;
+                let dy = particles[a].y - particles[b].y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < connectionDist) {
+                    // Opacity depends on distance (closer = brighter)
+                    let opacity = 1 - (distance / connectionDist);
+                    ctx.strokeStyle = `rgba(0, 255, 255, ${opacity * 0.5})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    function animate() {
+        // "Trail" Effect:
+        // Instead of clearing the canvas completely, we draw a semi-transparent black rectangle.
+        // This makes old frames fade out slowly, creating motion trails.
+        ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; 
+        ctx.fillRect(0, 0, width, height);
+
+        particles.forEach(particle => {
+            particle.update();
+            particle.draw();
+        });
+        
+        connectParticles();
+        
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+</script>
+
+</body>
+</html>

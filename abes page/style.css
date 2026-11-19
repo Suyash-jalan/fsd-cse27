@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.main-header {
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 40px;
+    width: 100%;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.college-logo {
+    height: 60px;
+    width: auto;
+    display: block;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 100px;
+}
+
+.nav-item a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-item a:hover {
+    color: #ffcc00;
+}
+
+@media (max-width: 850px) {
+    .main-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+        padding: 15px;
+    }
+    
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    background-image: url('https://www.abes.ac.in/assets/2.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.hero-content {
+    color: white;
+
+}
+.site-footer {
+    background-color: #121212;
+    color: #b3b3b3;
+    font-family: Arial, sans-serif;
+    padding: 60px 40px 30px 40px;
+    font-size: 13px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-column h3 {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 12px;
+}
+
+.footer-column ul li a {
+    color: #b3b3b3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: #ffffff;
+}
+
+.links-grid {
+    display: flex;
+    gap: 40px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center p {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons img {
+    width: 20px;
+    height: 20px;
+    filter: invert(1);
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.social-icons img:hover {
+    opacity: 1;
+}
+
+.single-list {
+    margin-top: 43px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 50px auto 0 auto;
+    border-top: 1px solid #222222;
+    padding-top: 30px;
+    text-align: center;
+}
+
+.footer-bottom img {
+    height: 50px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.footer-bottom p {
+    font-size: 12px;
+    color: #888888;
+}
+
+@media (max-width: 992px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .links-grid {
+        flex-direction: column;
+        gap: 0;
+    }
+    .align-right {
+        text-align: center;
+    }
+    .single-list {
+        margin-top: 0;
+    }
+    .hidden-title {
+        display: none;
+    }
+}

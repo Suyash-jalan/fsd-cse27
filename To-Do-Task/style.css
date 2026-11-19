@@ -1,0 +1,83 @@
+.main{
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* The outer box */
+.input-box {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 15px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between textarea and buttons */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  
+}
+
+
+.box{
+  align-items: center;
+  text-align: center;
+}
+
+/* The textarea */
+textarea {
+  width: 50%;
+  height: 100px;
+  padding: 10px;
+
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical; 
+  box-sizing: border-box; 
+  text-align: center;
+  
+}
+
+.delete-button {
+  margin-left: 10px;
+  margin-right: 10px;
+  align-items: end;
+  float: right;
+  margin-top: 7.5px;
+}
+
+.Done-button {
+  justify-content: right;
+  margin-right:10px;
+  
+  float: right;
+  margin-top: 7.5px;
+}
+
+
+button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  
+  
+}
+
+button:hover{
+  background-color: aquamarine;
+}
+
+.stored-text{
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 50%;
+  margin-bottom: 10px;
+  height: 50px;
+  margin-top: 10ox;
+  margin-left:25%;
+  align-items: center;
+  justify-content: center;
+  
+  
+
+}

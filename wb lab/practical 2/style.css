@@ -1,0 +1,45 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #eef3f7;
+}
+
+.container{
+    width: 500px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.row{
+    margin-bottom: 15px;
+}
+
+.row label{
+    display: inline-block;
+    width: 150px;
+}
+
+input,
+select,
+textarea{
+    width: 250px;
+    padding: 5px;
+}
+
+textarea{
+    resize: none;
+}
+
+.buttons{
+    text-align: center;
+}
+
+.buttons input{
+    width: 90px;
+    margin: 5px;
+}

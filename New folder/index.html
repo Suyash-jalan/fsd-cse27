@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+
+        .header h2 {
+            font-size: 24px;
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #a0a0a0;
+            font-size: 16px;
+        }
+
+        .form-section {
+            background: #2d2d2d;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 20px;
+            border: 1px solid #3d3d3d;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3d3d3d;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row.three-col {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #c0c0c0;
+            margin-bottom: 8px;
+        }
+
+        label .required {
+            color: #e74c3c;
+            margin-left: 4px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="url"],
+        input[type="number"],
+        input[type="time"],
+        select,
+        textarea {
+            background: #252525;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #ffffff;
+            font-size: 15px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #707070;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 40px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 13px;
+            color: #707070;
+            margin-top: 5px;
+        }
+
+        /* Tag/Chip Styles */
+        .tag-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: transparent;
+            border: 1px solid #505050;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #c0c0c0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .tag.selected {
+            background: #6366f1;
+            border-color: #6366f1;
+            color: #ffffff;
+        }
+
+        /* Toggle Switch */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #3d3d3d;
+        }
+
+        .toggle-row:last-of-type {
+            border-bottom: none;
+        }
+
+        .toggle {
+            position: relative;
+            width: 44px;
+            height: 24px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #404040;
+            border-radius: 24px;
+            transition: 0.3s;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle input:checked + .toggle-slider {
+            background: #6366f1;
+        }
+
+        .toggle input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .day-label {
+            font-weight: 500;
+            min-width: 40px;
+            color: #c0c0c0;
+        }
+
+        .time-inputs {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .time-inputs input {
+            width: 100px;
+            text-align: center;
+        }
+
+        .time-separator {
+            color: #707070;
+        }
+
+        .remove-btn {
+            color: #707070;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        /* File Upload */
+        .upload-area {
+            border: 2px dashed #505050;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            background: #252525;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: #6366f1;
+        }
+
+        .upload-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .upload-text {
+            color: #6366f1;
+            font-weight: 500;
+        }
+
+        .upload-hint {
+            color: #707070;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            gap: 8px;
+            font-size: 24px;
+        }
+
+        .star {
+            color: #404040;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #fbbf24;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #6366f1;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            font-weight: 400;
+            cursor: pointer;
+        }
+
+        .checkbox-item a {
+            color: #6366f1;
+            text-decoration: none;
+        }
+
+        .checkbox-item a:hover {
+            text-decoration: underline;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            background: #2d2d2d;
+            border: 1px solid #505050;
+            border-radius: 12px;
+            padding: 16px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            background: #363636;
+            border-color: #6366f1;
+        }
+
+        .submit-note {
+            text-align: center;
+            color: #707070;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        /* Currency Input */
+        .currency-input {
+            display: flex;
+            align-items: center;
+            background: #252525;
+            border: 1px solid #404040;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .currency-symbol {
+            padding: 12px 16px;
+            background: #1f1f1f;
+            color: #a0a0a0;
+            font-weight: 500;
+            border-right: 1px solid #404040;
+        }
+
+        .currency-input input {
+            border: none;
+            background: transparent;
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .form-row,
+            .form-row.three-col {
+                grid-template-columns: 1fr;
+            }
+            
+            .time-inputs {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Mentor Registration Form</h1>
+            <h2>Mentor registration</h2>
+            <p>Complete your profile so mentees can find and book sessions with you.</p>
+        </div>
+
+        <form>
+            <!-- Personal Information -->
+            <div class="form-section">
+                <div class="section-title">Personal Information</div>
+                
+                
+                    <div class="form-group">
+                        <label>Full name <span class="required">*</span></label>
+                        <input type="text" placeholder="Arjun" required>
+                    </div>
+                    <br>
+
+                <div class="form-row ">
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" placeholder="Mumbai">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <select>
+                            <option selected>India</option>
+                            <option>United States</option>
+                            <option>United Kingdom</option>
+                            <option>Canada</option>
+                            <option>Australia</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    
+                </div>
+                
+                    <div class="form-group">
+                        <label>LinkedIn profile</label>
+                        <input type="url" placeholder="linkedin.com/in/arjun">
+                    </div>
+                    
+                
+                
+            </div>
+
+            <!-- Areas of Expertise -->
+            <div class="form-section">
+                <div class="section-title">Areas of Expertise</div>
+                
+                <label style="margin-bottom: 15px; display: block;">Select all that apply</label>
+                <div class="tag-group">
+                    <button type="button" class="tag">Product management</button>
+                    <button type="button" class="tag">Software engineering</button>
+                    <button type="button" class="tag">Data science</button>
+                    <button type="button" class="tag">UX / UI design</button>
+                    <button type="button" class="tag">Career coaching</button>
+                    <button type="button" class="tag">Leadership</button>
+                    <button type="button" class="tag">Entrepreneurship</button>
+                    <button type="button" class="tag">Marketing</button>
+                    <button type="button" class="tag">Finance</button>
+                    <button type="button" class="tag">Machine learning / AI</button>
+                    <button type="button" class="tag">Public speaking</button>
+                    <button type="button" class="tag">Resume / Interview prep</button>
+                    <button type="button" class="tag">GSOC</button>
+                    <button type="button" class="tag">Hackathon</button>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 25px;">
+                    <label>Other skills (comma separated)</label>
+                    <input type="text" placeholder="e.g. Blockchain, DevOps, Agile...">
+                </div>
+                <div class="form-group">
+                        <label>Experience level</label>
+                        <select>
+                            <option selected>Student / Fresh graduate</option>
+                            <option>Junior professional (0-3 years)</option>
+                            <option>Mid-level professional (3-7 years)</option>
+                            <option>Senior professional (7+ years)</option>
+                        </select>
+                </div>
+                <br>
+
+                <label style="margin-bottom: 15px; display: block;">Languages spoken</label>
+                <div class="tag-group">
+                    <button type="button" class="tag selected">English</button>
+                    <button type="button" class="tag">Hindi</button>
+                    <button type="button" class="tag">Tamil</button>
+                    <button type="button" class="tag">Bengali</button>
+                    <button type="button" class="tag">Marathi</button>
+                    <button type="button" class="tag">Other</button>
+                </div>
+            </div>
+
+            <!-- Weekly Availability -->
+            <div class="form-section">
+                <div class="section-title">Weekly Availability</div>
+                
+                <p style="color: #a0a0a0; margin-bottom: 20px; font-size: 14px;">Toggle days on and set your available time slots</p>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Mon</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Tue</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Wed</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Thu</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Fri</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Sat</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="toggle-row">
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                    <span class="day-label">Sun</span>
+                    <div class="time-inputs">
+                        <input type="time" value="09:00">
+                        <span class="time-separator">—</span>
+                        <input type="time" value="17:00">
+                    </div>
+                    <span class="remove-btn">—</span>
+                </div>
+
+                <div class="form-row" style="margin-top: 25px; margin-bottom: 0;">
+                    <div class="form-group">
+                        <label>Session duration</label>
+                        <select>
+                            <option selected>45 minutes</option>
+                            <option>30 minutes</option>
+                            <option>60 minutes</option>
+                            <option>90 minutes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Max sessions per week</label>
+                        <select>
+                            <option selected>3 sessions</option>
+                            <option>1 session</option>
+                            <option>2 sessions</option>
+                            <option>4 sessions</option>
+                            <option>5 sessions</option>
+                            <option>Unlimited</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 20px;">
+                    <label>Timezone</label>
+                    <select>
+                        <option selected>IST – India Standard Time (UTC+5:30)</option>
+                        <option>GMT – Greenwich Mean Time (UTC+0)</option>
+                        <option>EST – Eastern Standard Time (UTC-5)</option>
+                        <option>PST – Pacific Standard Time (UTC-8)</option>
+                        <option>CET – Central European Time (UTC+1)</option>
+                    </select>
+                </div>
+            </div>
+
+            
+
+            
+
+            <!-- Terms & Consent -->
+            <div class="form-section">
+                <div class="section-title">Terms & Consent</div>
+                
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="profile-share">
+                        <label for="profile-share">I consent to sharing my profile with prospective mentees</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="conduct">
+                        <label for="conduct">I agree to maintain professional conduct during all sessions</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="updates">
+                        <label for="updates">Send me session reminders and platform updates (optional)</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit mentor application →
+            </button>
+            <p class="submit-note">Your application will be reviewed within 24 hours.</p>
+        </form>
+    </div>
+
+    <script>
+        // Tag selection toggle
+        document.querySelectorAll('.tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+
+        // Star rating
+        document.querySelectorAll('.star').forEach((star, index) => {
+            star.addEventListener('click', function() {
+                document.querySelectorAll('.star').forEach((s, i) => {
+                    if (i <= index) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // Character count for bio
+        const bioTextarea = document.querySelector('textarea[maxlength="500"]');
+        const charCount = document.querySelector('.char-count');
+        
+        bioTextarea.addEventListener('input', function() {
+            charCount.textContent = `${this.value.length} / 500`;
+        });
+
+        // File upload click handlers
+        document.querySelectorAll('.upload-area').forEach(area => {
+            area.addEventListener('click', function() {
+                alert('File upload dialog would open here');
+            });
+        });
+    </script>
+</body>
+</html>
